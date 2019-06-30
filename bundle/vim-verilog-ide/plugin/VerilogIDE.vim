@@ -64,7 +64,13 @@ endfunction
 function! Open_block_list()
 python << endOfPython
 
+## Classes
+#ff = func_ide2.Func()
+#list_path_in_mem = ff.get_block_list()
+##
+
 list_path_in_mem = func_ide.get_block_list()
+
 if(list_path_in_mem != None):
    vim.command("e "+list_path_in_mem)
 else:
