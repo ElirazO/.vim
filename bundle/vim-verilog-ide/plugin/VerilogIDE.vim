@@ -12,9 +12,10 @@ python import time
 " --------------------------------------------------
 function! Open_pointed_module()
 python << endOfPython
+f1 = func_ide.Func()
 
 module = vim.eval('expand("<cword>")')
-path_to_module = func_ide.get_path_from_list(module)
+path_to_module = f1.get_path_from_list(module)
 if (path_to_module != None):
    vim.command("e "+path_to_module)
 else:
@@ -27,9 +28,11 @@ endfunction
 
 function! Set_block_list(blocklist)
 python << endOfPython
+f1 = func_ide.Func()
 
 local_blocks = vim.eval("a:blocklist")
-func_ide.set_block_list(local_blocks)
+f1.set_block_list(local_blocks)
+
 
 endOfPython
 endfunction
@@ -38,9 +41,10 @@ endfunction
 
 function! Set_path_as_block_list()
 python << endOfPython
+f1 = func_ide.Func()
 
 file_path = vim.eval('expand("%:p")')
-func_ide.set_block_list(file_path)
+f1.set_block_list(file_path)
 
 endOfPython
 endfunction
@@ -49,8 +53,10 @@ endfunction
 
 function! Get_block_list()
 python << endOfPython
+f1 = func_ide.Func()
 
-list_path_in_mem = func_ide.get_block_list()
+list_path_in_mem = f1.get_block_list()
+
 if(list_path_in_mem != None):
 	print list_path_in_mem
 else:
@@ -63,13 +69,9 @@ endfunction
 
 function! Open_block_list()
 python << endOfPython
+f1 = func_ide.Func()
 
-## Classes
-#ff = func_ide2.Func()
-#list_path_in_mem = ff.get_block_list()
-##
-
-list_path_in_mem = func_ide.get_block_list()
+list_path_in_mem = f1.get_block_list()
 
 if(list_path_in_mem != None):
    vim.command("e "+list_path_in_mem)
@@ -83,26 +85,28 @@ endfunction
 
 function! Get_inst_name()
 python << endOfPython
+f1 = func_ide.Func()
 
 file_path = vim.eval('expand("%:p")')
 
 if 'last_path' in locals():
    if(file_path != last_path):
-      func_ide.no_com_verilog(file_path)
+      f1.no_com_verilog(file_path)
+
       last_path = file_path
       last_modify = time.ctime(os.path.getmtime(file_path))
    
    elif(last_modify != time.ctime(os.path.getmtime(file_path))):
-      func_ide.no_com_verilog(file_path)
+      f1.no_com_verilog(file_path)
       last_path = file_path
       last_modify = time.ctime(os.path.getmtime(file_path))       
       
 else:
-   func_ide.no_com_verilog(file_path)
+   f1.no_com_verilog(file_path)
    last_path = file_path
    last_modify = time.ctime(os.path.getmtime(file_path))
 
-inst_name = func_ide.get_inst_name(file_path)
+inst_name = f1.get_inst_name(file_path)
 
 endOfPython
 endfunction
@@ -111,10 +115,12 @@ endfunction
 
 function! No_com_verilog()
 python << endOfPython
+f1 = func_ide.Func()
 
 start = time.time()  
 file_path = vim.eval('expand("%:p")')
-func_ide.no_com_verilog(file_path)
+f1.no_com_verilog(file_path)
+
 print time.time() - start
 
 endOfPython
@@ -124,10 +130,12 @@ endfunction
 
 function! Fast_rm_com()
 python << endOfPython
+f1 = func_ide.Func()
 
 start = time.time()  
 file_path = vim.eval('expand("%:p")')
-func_ide.fast_rm_com(file_path)
+f1.fast_rm_com(file_path)
+
 print time.time() - start
 
 endOfPython
@@ -138,9 +146,12 @@ endfunction
 function! Branches()
 python << endOfPython
 
+f1 = func_ide.Func()
+
 thisfile_path = vim.eval('expand("%:p")')
-cln_com_ver = func_ide.fast_rm_com(thisfile_path)
-modules_list , names_list = func_ide.branches(cln_com_ver) 
+cln_com_ver = f1.fast_rm_com(thisfile_path)
+
+modules_list , names_list = f1.branches(cln_com_ver) 
 
 for m in range(len(modules_list)):
    print "Module: \""+modules_list[m]+"\"  ,  Name: \""+names_list[m]+"\""
@@ -152,9 +163,10 @@ endfunction
 
 function! Module_name()
 python << endOfPython
+f1 = func_ide.Func()
 
 thisfile_path = vim.eval('expand("%:p")')
-mod = func_ide.module_name(thisfile_path) 
+mod = f1.module_name(thisfile_path) 
 if (mod != None):
    print mod
 
@@ -165,11 +177,12 @@ endfunction
 
 function! Get_net_type()
 python << endOfPython
+f1 = func_ide.Func()
 
 thisfile_path = vim.eval('expand("%:p")')
-cln_com_ver = func_ide.fast_rm_com(thisfile_path)
+cln_com_ver = f1.fast_rm_com(thisfile_path)
 input_object = vim.eval('expand("<cword>")')
-func_ide.get_net_type(cln_com_ver,input_object)
+f1.get_net_type(cln_com_ver,input_object)
 
 endOfPython
 endfunction
@@ -178,10 +191,11 @@ endfunction
 
 function! Roots()
 python << endOfPython
+f1 = func_ide.Func()
 
 #start = time.time()  
 thisfile_path = vim.eval('expand("%:p")')
-func_ide.roots(thisfile_path)
+f1.roots(thisfile_path)
 #print time.time() - start
 
 endOfPython
@@ -191,10 +205,11 @@ endfunction
 
 function! Root()
 python << endOfPython
+f1 = func_ide.Func()
 
 #start = time.time()  
 thisfile_path = vim.eval('expand("%:p")')
-func_ide.root(thisfile_path)
+f1.root(thisfile_path)
 #print time.time() - start
 
 endOfPython
@@ -219,9 +234,10 @@ endfunction
 
 function! Open_last_searched()
 python << endOfPython
+f1 = func_ide.Func()
 
 if (inst_name):
-   path_to_module = func_ide.get_path_from_list(inst_name)
+   path_to_module = f1.get_path_from_list(inst_name)
    if (path_to_module != None):
       vim.command("e "+path_to_module)
    else:
@@ -236,9 +252,10 @@ endfunction
 
 function! ProgressBar()
 python << endOfPython
+f1 = func_ide.Func()
 
 for i in range(1,1234):
-   func_ide.progress_bar("Eliraz:",i+1,1234)
+   f1.progress_bar("Eliraz:",i+1,1234)
 
 endOfPython
 endfunction
