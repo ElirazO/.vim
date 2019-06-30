@@ -69,6 +69,7 @@ endfunction
 
 function! Open_block_list()
 python << endOfPython
+
 f1 = func_ide.Func()
 
 list_path_in_mem = f1.get_block_list()

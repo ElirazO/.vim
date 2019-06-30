@@ -51,7 +51,7 @@ class Func:
    def set_block_list(self,local_blocks):
       if os.path.exists(local_blocks) :
          if re.search(".list",local_blocks) :
-            with open(self.location+"/func_mem.txt",'w') as f:
+            with open(self.location+"/.func_mem.txt",'w') as f:
                f.write(local_blocks)        
             print("Uploading list succeeded!")
          else:
@@ -63,7 +63,7 @@ class Func:
    
    def get_block_list(self):
       try:
-         with open(self.location+"/func_mem.txt",'r') as func_mem:
+         with open(self.location+"/.func_mem.txt",'r') as func_mem:
             line_func_mem = func_mem.readline()
       except:
          print "IOError (get_block_list()) : Block list unloaded or not valid. Please use 'Set_block_list(<Path>) for insertion."
@@ -110,14 +110,14 @@ class Func:
       text_out = ''.join(list_text)
    
       try:
-         with open(self.location+"/verilog_no_comment.v",'w') as f_out:  
+         with open(self.location+"/.verilog_no_comment.v",'w') as f_out:  
             f_out.write(text_out)
       except:
          print "IOError (no_com_verilog()): - Writig Faild!"
    
    ##-------------------------------------------------------------------------------------
    def fast_rm_com(self,input_file_p):
-      output_file = self.location+"/fast_rm_comment.v"
+      output_file = self.location+"/.fast_rm_comment.v"
          
       try:
          with open(input_file_p,'r') as f_in:
@@ -155,9 +155,9 @@ class Func:
       col_num = vim.eval('col(".")') # i want to allow identification of every stractur. 
       
       try:
-         with open(self.location+"/verilog_no_com_cursor_flag.v",'w') as file_cursor_flag:
+         with open(self.location+"/.verilog_no_com_cursor_flag.v",'w') as file_cursor_flag:
             try:
-               with open(self.location+"/verilog_no_comment.v",'r') as file_no_com:  
+               with open(self.location+"/.verilog_no_comment.v",'r') as file_no_com:  
                   for i,line in enumerate(file_no_com):
                      if str(i+1) == line_num :
                         newline = "X!X!X ->"+line            #not only in the begin of the line
@@ -169,7 +169,7 @@ class Func:
          return None      
    
       try:
-         with open(self.location+"/verilog_no_com_cursor_flag.v",'r') as file_with_flag:
+         with open(self.location+"/.verilog_no_com_cursor_flag.v",'r') as file_with_flag:
             filetext = file_with_flag.read()
       except:
          return None
