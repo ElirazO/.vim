@@ -1,10 +1,8 @@
 python import sys 
 python import vim
 python sys.path.append(vim.eval('expand("<sfile>:h")'))
-python import python_scr
 python from python_scr import func_ide
 python import os
-python import re
 python import time
 
 " --------------------------------------------------
