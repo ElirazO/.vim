@@ -30,7 +30,7 @@ set wildmenu
 "highlight cursorline cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=Yellow
 "set cursorline
 
-colorscheme eliraz_48
+colorscheme eliraz_53
 
 if has("terminfo")     
 set t_Co=8     
@@ -45,6 +45,7 @@ endif
 if &t_Co > 2 || has("gui_running") 
 syntax on
 endif 
+
 
 if has("autocmd") 
 augroup cprog
@@ -69,19 +70,26 @@ autocmd FileAppendPost		   *.gz !gzip <afile>:r
 augroup END
 endif 
 
-autocmd BufReadPost *.iasm,*.asm,*.cfg,*tech*,*.rc set filetype=pic
 autocmd BufReadPost *aliases*,run,run_clarinet*,*.err,*.delay,*summery set filetype=sh
-autocmd BufReadPost *.dc,*.DC set filetype=dcl
-autocmd BufReadPost check_*,cmp_*,convert_celldb2head,.csv,a,b,c,*.run set filetype=perl
 autocmd BufReadPost *.kf,*.KF,*.nl,*.csh,*.c set filetype=c
 autocmd BufReadPost *.M,*.m set filetype=matlab
 autocmd BufReadPost *.tcl,*.rab,*.do,*.lib set filetype=tcl
-autocmd BufReadPost *makefile,Makefile*@@/main*,Makefile.*@@/main/*,MasterMake,tmp*,*.cs set filetype=make
-autocmd BufReadPost *.netlist,*MICA*,*mica*,*.deck,*.mcspice,*.focus_tech,*.wcs_sp,*.typ_sp,*.bcs_sp,*.dspf,*.DSPF,*spice*,*.cdl,*.ckt,*.fixed set filetype=spice
-autocmd BufReadPost *.pmv,*.prl,erc_*.cfg,*.md,generate_spice,*.cmd set filetype=perl
-autocmd BufReadPost *.PMV,*.vb,*.v,*.V,*.rv,*.sv,*.everilog,*.ver,*.sim,*.hv,*.rtl,*.glv,*.sa,*.sa_args,*.sa_stb,*.mon,*.sa_mon,*.vs,*.VS,*.f,*.uvs,*.inp,*.CTL,*.ctl,*.glvl,*.bt_do*,*.lec_do,*.lec,clarinet_command,idmci_config,*.log,*.elog*,*.cbv,*.sva,*.inc,*.con,*.list,covergroups,*.vsif,*.v@@/main*,*.v.*,*.dofile,*.svh set filetype=verilog
-autocmd BufReadPost *scenario*.txt,*.e@@/main* set filetype=specman
-autocmd BufReadPost *.vhd@@/main* set filetype=vhdl
+autocmd BufReadPost *.prl set filetype=perl
+autocmd BufReadPost *.v,*.sv,*.everilog,*.ver,*.rtl,*.glv set filetype=verilog
+autocmd BufReadPost *.e set filetype=specman
+autocmd BufReadPost *.vhd set filetype=vhdl
+autocmd BufReadPost *.py set filetype=python
+
+"filetype plugin on
+"let g:pydiction_location = '/home/elirazo/.vim/bundle/vim-dictionary/python'
+
+"Dictionary
+au FileType * execute 'set dict+=~/.vim/bundle/vim-dictionary/'.&filetype
+set complete+=k
+set iskeyword+=.,(
+set pumheight=8
+
+
 
 " Useful mappings here
 map <C-a> ggvG<End>
@@ -129,7 +137,7 @@ imap <S-RightMouse> <Esc><C-v><RightMouse>
 map  <S-RightMouse> <C-v><RightMouse>
 map  <C-d> v<Home><Del>
 imap <C-d> <Esc>v<Home><Del><Insert>
-imap <C-TAB> <C-n>
+imap <TAB> <C-n>
 
 
 nmap <s-Left>  :tabp<CR>
@@ -143,11 +151,9 @@ map  <S-s> :vsp<return>:bprevious<return>
 map  <C-f> /
 imap <C-f> <Esc>/
 
-map <TAB> <Esc>?;<return>
-
 map <S-p>  <Esc>:echo expand('%:p')<return>
 map <C-l>  <Esc>:cd %:p:h<return>
-map <C-F8>   <Esc>:e ~/.gvimrc<return>
+map <C-F8>   <Esc>:e ~/.vim/gvimrc<return>
 
 "----------NERDTree plugin shortcuts----------------
 map <C-F12> :NERDTree<return>
@@ -160,21 +166,9 @@ vmap <C-F11> <Esc>:NERDTreeClose<return>
 imap <C-F11> <Esc>:NERDTreeClose<return>
 nmap <C-F11> <Esc>:NERDTreeClose<return>
 
+"autocmd BufEnter NERD_tree_* colorscheme desert 
+
 nnoremap <silent><expr> <F9> ':set wrap! go'.'-+'[&wrap]."=b\r"
-
-"-------- DBASE LAST VERSION --------
-function! Last_Version()
-python << endOfPython
-import vim , os 
-
-module = vim.eval('expand("<cword>")')
-vim.command("! dbase.pl lv "+module+" -num 1")
-
-endOfPython
-endfunction
-
-map <C-RightMouse> <LeftMouse>:call Last_Version()<return>
-"-----------------------------------
 
 map <A-a> <Esc>:print<return>
 
