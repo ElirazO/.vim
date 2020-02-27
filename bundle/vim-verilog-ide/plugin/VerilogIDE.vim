@@ -281,7 +281,7 @@ command! SetPathAsBlockList call Set_path_as_block_list()
 "map <C-w> <esc>:WhichInst<return>
 "map <C-e> <esc>:GetNetType<return>
 
-map <C-LeftMouse> <LeftMouse>:call Open_pointed_module()<return>
+"map <C-LeftMouse> <LeftMouse>:call Open_pointed_module()<return>
 map <A-1> <esc>:WhichInst<return>
 map <A-2> <esc>:OpenLastSearched<return>
 

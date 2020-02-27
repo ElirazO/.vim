@@ -13,24 +13,42 @@ set history=100		   " keep 100 lines of command line history
 set ruler		         " show the cursor position all the time
 set undolevels=100       
 set mouse=a              
-set shiftwidth=3         
+set shiftwidth=2         
 set smarttab             
 set laststatus=2         
 set showcmd              
 set backspace=indent,eol,start
 set hlsearch            " Vim will highlight all matches.
 set incsearch
-
+set guifont=Inconsolata\ for\ Powerline\ Medium\ 12
 set wildmenu
+set guioptions-=T
+
+set tags=tags; 
+"set tags=/my/dir1/tags,/my/dir2/tags
+
+set autochdir "auto change directory
+"set clipboard=unnamed
+
+set foldmethod=syntax
+"set foldmethod=indent
+set foldlevel=20
+
+"
+" zo - opens a fold at the cursor
+" zO - opens all fold at the cursor 
+" zc - closes a fold aat the cursor
+" zm - increases the foldlevel by one
+" zM - closes all open folds
+" zr - decreases the foldlevel by one
+" zR - decreades the foldlevel to zero - all the fold will be open
+
 
 "set nowrap
 "set CursorLineNR
 "set guioptions+=b
 
-"highlight cursorline cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=Yellow
-"set cursorline
-
-colorscheme eliraz_53
+colorscheme eliraz_59
 
 if has("terminfo")     
 set t_Co=8     
@@ -71,7 +89,8 @@ augroup END
 endif 
 
 autocmd BufReadPost *aliases*,run,run_clarinet*,*.err,*.delay,*summery set filetype=sh
-autocmd BufReadPost *.kf,*.KF,*.nl,*.csh,*.c set filetype=c
+autocmd BufReadPost *.kf,*.KF,*.nl,*.csh,*.c,*.ic set filetype=c
+autocmd BufReadPost *.cpp,*.h set filetype=cpp
 autocmd BufReadPost *.M,*.m set filetype=matlab
 autocmd BufReadPost *.tcl,*.rab,*.do,*.lib set filetype=tcl
 autocmd BufReadPost *.prl set filetype=perl
@@ -80,16 +99,11 @@ autocmd BufReadPost *.e set filetype=specman
 autocmd BufReadPost *.vhd set filetype=vhdl
 autocmd BufReadPost *.py set filetype=python
 
-"filetype plugin on
-"let g:pydiction_location = '/home/elirazo/.vim/bundle/vim-dictionary/python'
-
 "Dictionary
 au FileType * execute 'set dict+=~/.vim/bundle/vim-dictionary/'.&filetype
 set complete+=k
-set iskeyword+=.,(
+"set iskeyword+=.,(
 set pumheight=8
-
-
 
 " Useful mappings here
 map <C-a> ggvG<End>
@@ -172,4 +186,4 @@ nnoremap <silent><expr> <F9> ':set wrap! go'.'-+'[&wrap]."=b\r"
 
 map <A-a> <Esc>:print<return>
 
-
+vnoremap <C-c> "*y
